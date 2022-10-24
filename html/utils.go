@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -59,7 +60,7 @@ func createTables(name string, url string, path string) ([]string, []string) {
 				}
 			})
 			rowhtml.Find("td").Each(func(iTd int, tablecell *goquery.Selection) {
-				colVal := tablecell.Text()
+				colVal := normalize(tablecell.Text())
 				if colVal != "" {
 					row += fmt.Sprintf("\"%s\",", colVal)
 				}
@@ -92,5 +93,7 @@ func forceASCII(s string) string {
 
 func normalize(s string) string {
 	rs := forceASCII(s)
+	pattern := regexp.MustCompile(`[\s\n]+`)
+	rs = pattern.ReplaceAllString(rs, "")
 	return rs
 }
