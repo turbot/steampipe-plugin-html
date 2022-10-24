@@ -84,16 +84,53 @@ func writeRowsToCsv(path string, name string, rows string) {
 func forceASCII(s string) string {
 	rs := make([]rune, 0, len(s))
 	for _, r := range s {
-	  if r <= 127 {
-		rs = append(rs, r)
-	  }
+		if r <= 127 {
+			rs = append(rs, r)
+		}
 	}
 	return string(rs)
-  }
+}
 
 func normalize(s string) string {
 	rs := forceASCII(s)
 	pattern := regexp.MustCompile(`[\s\n]+`)
 	rs = pattern.ReplaceAllString(rs, "")
 	return rs
+}
+
+func findLinks(url string) ([]string, []string) {
+	data, err := getHtmlPage(url)
+	if err != nil {
+		panic(err)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(data))
+	if err != nil {
+		panic(err)
+	}
+
+	labels := []string{}
+	urls := []string{}
+
+	doc.Find("a").Each(func(i int, html *goquery.Selection) {
+		node := html.Nodes[0]
+		if node.FirstChild == nil {
+			return
+		}
+		if node.FirstChild.Type != 1 {
+			return
+		}
+		label := node.FirstChild.Data
+		url := ""
+		attrs := node.Attr
+		for _, attr := range attrs {
+			if attr.Key == "href" {
+				url = attr.Val
+			}
+		}
+		labels = append(labels, label)
+		urls = append(urls, url)
+	})
+
+	return labels, urls
 }

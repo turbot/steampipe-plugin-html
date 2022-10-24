@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
-	github.com/turbot/steampipe-plugin-sdk/v3 v3.3.2
 	github.com/turbot/steampipe-plugin-sdk/v4 v4.1.7
 )
 

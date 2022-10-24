@@ -25,7 +25,8 @@ Build and use locally.
 +--------------------+-----------------------------------------------------------------------------+
 | TABLE              | DESCRIPTION                                                                 |
 +--------------------+-----------------------------------------------------------------------------+
-| html               | Query web pages for HTML tables, download them to CSV files                 |
+| html_link          | Query a web page for links.                                                 |
+| html_table         | Query a web page for HTML tables, download them to CSV files.               |
 +--------------------+-----------------------------------------------------------------------------+
 ```
 
