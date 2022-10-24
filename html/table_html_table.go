@@ -5,7 +5,7 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
 )
-
+  
 type HtmlTable struct {
 	BaseName string `json:"base_name"`
 	Name     string `json:"name"`
@@ -33,7 +33,6 @@ func tableHtmlTable(ctx context.Context) *plugin.Table {
 			KeyColumns: []*plugin.KeyColumn{
 				{Name: "base_name", Require: plugin.Required},
 				{Name: "url", Require: plugin.Required},
-				{Name: "path", Require: plugin.Required},
 			},
 		},
 		Columns: htmlCols(),
@@ -43,8 +42,14 @@ func tableHtmlTable(ctx context.Context) *plugin.Table {
 func listHtmlTable(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	base_name := d.KeyColumnQuals["base_name"].GetStringValue()
 	url := d.KeyColumnQuals["url"].GetStringValue()
+	config := GetConfig(d.Connection) 
+	
 	path := d.KeyColumnQuals["path"].GetStringValue()
-	plugin.Logger(ctx).Warn("listHtmlTable", "base_name", base_name, "url", url, "path", path)
+	if config.Path != nil {
+		path = *config.Path
+	} 
+
+ 	plugin.Logger(ctx).Warn("listHtmlTable", "base_name", base_name, "url", url, "path", path)
 	names, columns := createTables(base_name, url, path)
 	plugin.Logger(ctx).Warn("listHtmlTable", "names", names, "columns", columns)
 	for i := 0; i < len(names); i++ {

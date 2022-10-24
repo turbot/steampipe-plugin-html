@@ -52,13 +52,17 @@ func createTables(name string, url string, path string) ([]string, []string) {
 		tablehtml.Find("tr").Each(func(iTr int, rowhtml *goquery.Selection) {
 			row := ""
 			rowhtml.Find("th").Each(func(iTh int, tableheading *goquery.Selection) {
-				colName := tableheading.Text()
-				row += fmt.Sprintf("\"%s\",", colName)
-				cols += fmt.Sprintf("\"%s\",", colName)
+				colName := normalize(tableheading.Text())
+				if colName != "" {
+					row += fmt.Sprintf("\"%s\",", colName)
+					cols += fmt.Sprintf("\"%s\",", colName)
+				}
 			})
 			rowhtml.Find("td").Each(func(iTd int, tablecell *goquery.Selection) {
 				colVal := tablecell.Text()
-				row += fmt.Sprintf("\"%s\",", colVal)
+				if colVal != "" {
+					row += fmt.Sprintf("\"%s\",", colVal)
+				}
 			})
 			rows += fmt.Sprintf("%s\n", row[:len(row)-1])
 		})
@@ -74,4 +78,19 @@ func writeRowsToCsv(path string, name string, rows string) {
 	w := bufio.NewWriter(f)
 	w.WriteString(rows)
 	w.Flush()
+}
+
+func forceASCII(s string) string {
+	rs := make([]rune, 0, len(s))
+	for _, r := range s {
+	  if r <= 127 {
+		rs = append(rs, r)
+	  }
+	}
+	return string(rs)
+  }
+
+func normalize(s string) string {
+	rs := forceASCII(s)
+	return rs
 }
