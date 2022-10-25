@@ -13,7 +13,9 @@
 
 ## HTML plugin for Steampipe
 
-Web pages often contain data in HTML tables. This plugin downloads one or more tables from a web page into one or more CSV files that you can query using the [CSV](https://hub.steampipe.io/plugins/turbot/steampipe-plugin-csv)
+Web pages often contain data in HTML tables. This plugin's `html_table` table downloads one or more tables from a web page into one or more CSV files that you can query using the [CSV](https://hub.steampipe.io/plugins/turbot/steampipe-plugin-csv).
+
+Web pages also contain links. This plugin's `html_link` table queries for them.
 
 ## Get started
 
