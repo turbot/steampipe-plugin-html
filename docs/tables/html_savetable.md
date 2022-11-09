@@ -1,4 +1,4 @@
-# Table: html_table
+# Table: html_savetable
 
 ## Examples
 
