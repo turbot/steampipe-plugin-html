@@ -17,14 +17,6 @@ where
   and base_name = 'wiki'
 ```
 
-```
-+-----------+--------+---------------+------------------------------------------------------------------------
-| base_name | name   | path          | columns
-+-----------+--------+---------------+------------------------------------------------------------------------
-| wiki      | wiki_0 | /home/jon/csv | "Rankinstates&territories,2019","Rankinstates&territories,2010","State"
-+-----------+--------+---------------+------------------------------------------------------------------------
-```
-
 In this example the plugin found one table on the page, and downloaded it as `/home/jon/csv/wiki_0.csv`.
 
 Here is a query of that table.

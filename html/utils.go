@@ -98,8 +98,8 @@ func normalize(s string) string {
 	return rs
 }
 
-func findLinks(url string) ([]string, []string) {
-	data, err := getHtmlPage(url)
+func findLinks(page string) ([]string, []string) {
+	data, err := getHtmlPage(page)
 	if err != nil {
 		panic(err)
 	}
@@ -133,4 +133,45 @@ func findLinks(url string) ([]string, []string) {
 	})
 
 	return labels, urls
+}
+
+type HtmlTag struct {
+	Page       string            `json:"page"`
+	TagName    string            `json:"tag_name"`
+	TagContent string            `json:"tag_content"`
+	TagAttrs   map[string]string `json:"tag_attrs"`
+}
+
+func findTags(page string, tag_name string) []HtmlTag {
+	data, err := getHtmlPage(page)
+	if err != nil {
+		panic(err)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(data))
+	if err != nil {
+		panic(err)
+	}
+
+	tag_results := []HtmlTag{}
+
+	doc.Find(tag_name).Each(func(i int, html *goquery.Selection) {
+		tag_attrs := map[string]string{}
+		for _, attr := range html.Nodes[0].Attr {
+			namespace := attr.Namespace
+			key := attr.Key
+			val := attr.Val
+			fmt.Printf("%s, %s, %s", namespace, key, val)
+			tag_attrs[key] = val
+		}
+		tag_result := HtmlTag{
+			Page:       page,
+			TagName:    tag_name,
+			TagContent: html.Text(),
+			TagAttrs:   tag_attrs,
+		}
+		tag_results = append(tag_results, tag_result)
+	})
+
+	return tag_results
 }

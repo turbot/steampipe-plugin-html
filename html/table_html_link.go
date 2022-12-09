@@ -21,7 +21,7 @@ func linkCols() []*plugin.Column {
 	}
 }
 
-func tableLinkTable(ctx context.Context) *plugin.Table {
+func tableHtmlLink(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "html_link",
 		Description: "Links found in a web page.",

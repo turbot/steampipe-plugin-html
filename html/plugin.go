@@ -12,7 +12,8 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		DefaultTransform: transform.FromJSONTag(),
 		TableMap: map[string]*plugin.Table{
 			"html_table": tableHtmlTable(ctx),
-			"html_link":  tableLinkTable(ctx),
+			"html_link":  tableHtmlLink(ctx),
+			"html_tag":   tableHtmlTag(ctx),
 		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
