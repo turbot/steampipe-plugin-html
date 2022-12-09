@@ -22,7 +22,7 @@ Web pages also contain links. This plugin's `html_link` table queries for them.
 Install go, then:
 
 ```
-$ git clone https://github.com/judell/steampipe-plugin-html
+$ git clone https://github.com/turbot/steampipe-plugin-html
 
 $ cp ./config/html.spc ~/.steampipe/config
 
