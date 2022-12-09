@@ -25,7 +25,7 @@ func htmlCols() []*plugin.Column {
 	}
 }
 
-func tableHtmlSaveTable(ctx context.Context) *plugin.Table {
+func tableHtmlTable(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "html_table",
 		Description: "HTML table from web page",
