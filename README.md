@@ -24,7 +24,7 @@ The file `./config/html.spc` is used to define a local path to which downloaded 
 Install go, then:
 
 ```
-$ git clone https://github.com/judell/steampipe-plugin-html
+$ git clone https://github.com/turbot/steampipe-plugin-html
 
 $ cp ./config/html.spc ~/.steampipe/config
 
