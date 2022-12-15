@@ -139,6 +139,7 @@ type HtmlTag struct {
 	Page       string            `json:"page"`
 	TagName    string            `json:"tag_name"`
 	TagContent string            `json:"tag_content"`
+	TagMarkup  string            `json:"tag_markup"`
 	TagAttrs   map[string]string `json:"tag_attrs"`
 }
 
@@ -164,10 +165,12 @@ func findTags(page string, tag_name string) []HtmlTag {
 			fmt.Printf("%s, %s, %s", namespace, key, val)
 			tag_attrs[key] = val
 		}
+		markup, _ := goquery.OuterHtml(html)
 		tag_result := HtmlTag{
 			Page:       page,
 			TagName:    tag_name,
 			TagContent: html.Text(),
+			TagMarkup:  markup,
 			TagAttrs:   tag_attrs,
 		}
 		tag_results = append(tag_results, tag_result)

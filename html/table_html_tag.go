@@ -12,7 +12,7 @@ func tagCols() []*plugin.Column {
 		{Name: "page", Type: proto.ColumnType_STRING, Description: "The page containing tags."},
 		{Name: "tag_name", Type: proto.ColumnType_STRING, Description: "The name of the tag."},
 		{Name: "tag_content", Type: proto.ColumnType_STRING, Description: "The content of the tag."},
-		{Name: "tag_attrs", Type: proto.ColumnType_JSON, Description: "The tag's attributes."},
+		{Name: "tag_markup", Type: proto.ColumnType_STRING, Description: "The tag's OuterHTML."},
 	}
 }
 
