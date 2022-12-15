@@ -33,7 +33,6 @@ where
 ## Query the citations in a Wikipedia page
 
 ```
-```
 select
   page,
   tag_name,
@@ -43,3 +42,5 @@ from
 where
   page = 'https://en.wikipedia.org/wiki/Screencast'
   and tag_name = 'cite'
+```
+
