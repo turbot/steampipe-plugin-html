@@ -12,7 +12,7 @@ func tagCols() []*plugin.Column {
 		{Name: "page", Type: proto.ColumnType_STRING, Description: "The page containing tags."},
 		{Name: "tag_name", Type: proto.ColumnType_STRING, Description: "The name of the tag."},
 		{Name: "tag_content", Type: proto.ColumnType_STRING, Description: "The content of the tag."},
-		{Name: "tag_markup", Type: proto.ColumnType_STRING, Description: "The tag's OuterHTML."},
+		{Name: "tag_markup", Type: proto.ColumnType_JSON, Description: "The tag's OuterHTML as JSON."},
 	}
 }
 
@@ -34,7 +34,7 @@ func tableHtmlTag(ctx context.Context) *plugin.Table {
 func listTags(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	page := d.KeyColumnQuals["page"].GetStringValue()
 	tag_name := d.KeyColumnQuals["tag_name"].GetStringValue()
-	tag_results := findTags(page, tag_name)
+	tag_results := findTags(ctx, page, tag_name)
 	for i := 0; i < len(tag_results); i++ {
 		tag_result := tag_results[i]
 		d.StreamListItem(ctx, tag_result)

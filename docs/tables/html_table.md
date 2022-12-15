@@ -5,7 +5,7 @@
 ### Download an HTML table from a Wikipedia page
 
 ```
-> select
+select
   base_name,
   name,
   path,

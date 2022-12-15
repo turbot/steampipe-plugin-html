@@ -5,7 +5,7 @@
 ### Query links in the NY Times home page
 
 ```
-> select
+select
   *
 from
   html_link
@@ -16,7 +16,7 @@ where
 ### Check links on a blog page
 
 ```
-> with urls as (
+with urls as (
     select
       page,
       case 

@@ -2,6 +2,7 @@ package html
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -10,6 +11,8 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
+	"github.com/v-grabko1999/go-html2json"
 )
 
 func getHtmlPage(webPage string) (string, error) {
@@ -143,7 +146,7 @@ type HtmlTag struct {
 	TagAttrs   map[string]string `json:"tag_attrs"`
 }
 
-func findTags(page string, tag_name string) []HtmlTag {
+func findTags(ctx context.Context, page string, tag_name string) []HtmlTag {
 	data, err := getHtmlPage(page)
 	if err != nil {
 		panic(err)
@@ -166,11 +169,21 @@ func findTags(page string, tag_name string) []HtmlTag {
 			tag_attrs[key] = val
 		}
 		markup, _ := goquery.OuterHtml(html)
+
+		d, err := html2json.New(strings.NewReader(markup))
+		if err != nil {
+			plugin.Logger(ctx).Debug("findTags", "err", err)
+		}
+		json, err := d.ToJSON()
+		if err != nil {
+			plugin.Logger(ctx).Debug("findTags", "err", err)
+		}
+
 		tag_result := HtmlTag{
 			Page:       page,
 			TagName:    tag_name,
 			TagContent: html.Text(),
-			TagMarkup:  markup,
+			TagMarkup:  string(json),
 			TagAttrs:   tag_attrs,
 		}
 		tag_results = append(tag_results, tag_result)
