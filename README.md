@@ -17,12 +17,14 @@ Web pages often contain data in HTML tables. This plugin's `html_table` table do
 
 Web pages also contain links. This plugin's `html_link` table queries for them.
 
+The file `./config/html.spc` is used to define a local path to which downloaded HTML files will be saved.
+
 ## Get started
 
 Install go, then:
 
 ```
-$ git clone https://github.com/judell/steampipe-plugin-html
+$ git clone https://github.com/turbot/steampipe-plugin-html
 
 $ cp ./config/html.spc ~/.steampipe/config
 
@@ -50,7 +52,7 @@ where
 +-----------+--------+---------------+------------------------------------------------------------------------
 ```
 
-In this example the plugin found one table on the page, and downloaded it as `/home/jon/csv/wiki_0.csv`.
+In this example the plugin found one table on the page, and downloaded it as `/home/jon/csv/wiki_0.csv` (the `/home/jon/csv` path is specified in `./config/html.spc`).
 
 Here is a query of that table.
 
